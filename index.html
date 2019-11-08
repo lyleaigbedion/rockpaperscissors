@@ -1,0 +1,33 @@
+<script>
+const computerPlay = () =>{
+    let choice = ["rock", "paper", "scissors"];
+    let len = choice.length;
+    return choice[Math.floor(Math.random() *Math.floor(len))];
+}
+function playRound(playerSelection, computerSelection){
+    let playerSelection = prompt("Rock, Paper, or Scissors? Choose one.");
+    
+    
+    while(playerSelection.toLower() != "rock" || playerSelection.toLower() != "paper" || playerSelection.toLower() != "scissors"){
+        playerSelection = prompt("Rock, Paper, or Scissors? Choose one.");
+
+    }
+
+    computerSelection = computerPlay();
+    
+    const win = (playerSelection, computerSelection) =>{
+        console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+    }
+
+    const lose = (playerSelection, computerSelection) =>{
+        console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+    }
+
+    const tie = (playerSelection, computerSelection) =>{
+        console.log(`It's a Tie!  You picked: ${playerSelection} and they picked: ${computerSelection}`);
+    }
+
+    
+}
+
+</script>
