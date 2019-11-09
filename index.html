@@ -1,10 +1,27 @@
 <script>
+    let playerScore = 0;
+    let compScore = 0;
+
+    const game = () =>{
+        let n = 5;
+        while(n > 0){
+            playRound();
+            console.log(`Score     PlayerScore: ${playerScore}  ComputerScore: ${compScore}`);
+            n--;
+        }
+        return 0;
+    }
+
+
+
 const computerPlay = () =>{
     let choice = ["rock", "paper", "scissors"];
     let len = choice.length;
     return choice[Math.floor(Math.random() *Math.floor(len))];
 }
+
 function playRound(){
+    
     let playerSelection = prompt("Rock, Paper, or Scissors? Choose one.");
     
     
@@ -18,6 +35,7 @@ function playRound(){
     
     if( lowerS === "rock" && computerSelection === "scissors"){
         win(playerSelection,computerSelection);
+        
     }
     if(lowerS === "paper" && computerSelection === "rock"){
         win(playerSelection,computerSelection);
@@ -49,10 +67,12 @@ function playRound(){
 
 
 const win = (playerSelection, computerSelection) =>{
+    playerScore++;
     console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
 }
 
 const lose = (playerSelection, computerSelection) =>{
+    compScore++;
     console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
 }
 
@@ -61,6 +81,6 @@ const tie = (playerSelection, computerSelection) =>{
 }
 
 
-playRound();
+game();
 
 </script>
