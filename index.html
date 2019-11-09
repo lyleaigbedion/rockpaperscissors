@@ -4,30 +4,63 @@ const computerPlay = () =>{
     let len = choice.length;
     return choice[Math.floor(Math.random() *Math.floor(len))];
 }
-function playRound(playerSelection, computerSelection){
+function playRound(){
     let playerSelection = prompt("Rock, Paper, or Scissors? Choose one.");
     
     
-    while(playerSelection.toLower() != "rock" || playerSelection.toLower() != "paper" || playerSelection.toLower() != "scissors"){
+    while(playerSelection.toLowerCase() != "rock" && playerSelection.toLowerCase() != "paper" && playerSelection.toLowerCase() != "scissors"){
         playerSelection = prompt("Rock, Paper, or Scissors? Choose one.");
 
     }
 
-    computerSelection = computerPlay();
+    let computerSelection = computerPlay();
+    let lowerS = playerSelection.toLowerCase();
     
-    const win = (playerSelection, computerSelection) =>{
-        console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+    if( lowerS === "rock" && computerSelection === "scissors"){
+        win(playerSelection,computerSelection);
+    }
+    if(lowerS === "paper" && computerSelection === "rock"){
+        win(playerSelection,computerSelection);
+    }
+    if(lowerS === "scissors" && computerSelection === "paper"){
+        win(playerSelection,computerSelection);
+    }
+    if( lowerS === "scissors" && computerSelection === "rock"){
+        lose(playerSelection,computerSelection);
+    }
+    if(lowerS === "rock" && computerSelection === "paper"){
+        lose(playerSelection,computerSelection);
+    }
+    if(lowerS === "paper" && computerSelection === "scissors"){
+        lose(playerSelection,computerSelection);
+    }
+    if( lowerS === "rock" && computerSelection === "rock"){
+        tie(playerSelection,computerSelection);
+    }
+    if(lowerS === "paper" && computerSelection === "paper"){
+        tie(playerSelection,computerSelection);
+    }
+    if(lowerS === "scissors" && computerSelection === "scissors"){
+        tie(playerSelection,computerSelection);
     }
 
-    const lose = (playerSelection, computerSelection) =>{
-        console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
-    }
 
-    const tie = (playerSelection, computerSelection) =>{
-        console.log(`It's a Tie!  You picked: ${playerSelection} and they picked: ${computerSelection}`);
-    }
-
-    
 }
+
+
+const win = (playerSelection, computerSelection) =>{
+    console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+}
+
+const lose = (playerSelection, computerSelection) =>{
+    console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+}
+
+const tie = (playerSelection, computerSelection) =>{
+    console.log(`It's a Tie!  You picked: ${playerSelection} and they picked: ${computerSelection}`);
+}
+
+
+playRound();
 
 </script>
