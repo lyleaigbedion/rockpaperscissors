@@ -1,4 +1,27 @@
-let rounds;
+//first create style and form
+
+const container = document.querySelector('#main');
+container.setAttribute('style', ' position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);');
+
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissors = document.querySelector('#scissors')
+
+//reset and exit buttons created 
+const reset = document.createElement('button');
+reset.id = "reset";
+reset.innerHTML = "Reset";
+
+const exit = document.createElement('button');
+exit.id = 'exit';
+exit.innerHTML = 'Exit';
+
+//container.appendChild(reset);
+
+
+
+
+/*let rounds;
 let playerScore = 0;
 let compScore = 0;
 
@@ -107,4 +130,4 @@ const tie = (playerSelection, computerSelection) =>{
 }
 
 
-game();
+game();*/
