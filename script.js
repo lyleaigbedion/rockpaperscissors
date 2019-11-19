@@ -1,67 +1,67 @@
 //first create style and form
+const body = document.querySelector('body');
+// rounds form
+const formDiv = document.createElement('div')
+formDiv.id = "rounds";
+
+formDiv.setAttribute('style', ' position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);');
+
+const input = document.createElement('input');
+input.id = "input";
+input.type = "text";
+input.placeholder = "Enter the number of rounds";
+input.setAttribute('style','height: 34px; font-size: 16px;');
+const submit = document.createElement('button');
+submit.id = 'submit';
+submit.innerHTML= "Submit";
+
+formDiv.appendChild(input);
+formDiv.appendChild(submit);
+
+body.appendChild(formDiv);
 
 const container = document.querySelector('#main');
 container.setAttribute('style', ' position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);');
+container.classList.add("invisible");
 
 const rock = document.querySelector('#rock');
 const paper = document.querySelector('#paper');
 const scissors = document.querySelector('#scissors')
+//div to add game text
+const gameText = document.createElement('div');
+gameText.id = 'text';
+gameText.innerHTML = "";
+container.appendChild(gameText);
 
 //reset and exit buttons created 
+const end = document.createElement('div');
+end.id = "gameOverChoice";
+end.classList.add('invisible');
+
+end.setAttribute('style', ' position: relative; top: 50%; left: 50%; transform: translate(-50%, 0%);');
+
 const reset = document.createElement('button');
 reset.id = "reset";
-reset.innerHTML = "Reset";
+reset.innerHTML = "Yes";
 
 const exit = document.createElement('button');
 exit.id = 'exit';
-exit.innerHTML = 'Exit';
+exit.innerHTML = 'No';
 
-//container.appendChild(reset);
+end.appendChild(reset);
+end.appendChild(exit)
 
 
+container.appendChild(end);
 
 
-/*let rounds;
+//adding eventlisteners
+
+let roundCount = 0;
+let rounds;
+let playerChoice;
 let playerScore = 0;
 let compScore = 0;
-
-const roundCount = () => {
-        rounds = prompt("Enter the amount of rounds you want to play.");
-        while(isNaN(Number(rounds))){
-            rounds = prompt("Please enter numbers only");
-        }
-        rounds = Number(rounds);
-    }
-const game = () =>{
-    roundCount();
-    let n = rounds;
-    while(n > 0){
-        playRound();
-        console.log(`Score     PlayerScore: ${playerScore}  ComputerScore: ${compScore}`);
-        n--;
-    }
-    reset();
-    console.log("Game Over!")
-    return 0;
-}
-
-const reset = () => {
-    let resetPrompt = prompt("Enter R to reset the game or E to exit" );
-    while(resetPrompt.toLowerCase() != "r" && resetPrompt.toLowerCase() != "e"){
-        resetPrompt = prompt("CHOOSE R OR E");
-    }
-    resetPrompt = resetPrompt.toLowerCase();
-    if (resetPrompt == "r") {
-        playerScore = 0;
-        compScore = 0;
-        console.log(`GAME HAS BEEN RESET \n SCORES: \n PlayerScore: ${playerScore} ComputerScore: ${compScore}`);
-        game();
-    } else if(resetPrompt == "e"){
-            return 0;
-        }
-    
-
-}
 
 const computerPlay = () =>{
     let choice = ["rock", "paper", "scissors"];
@@ -69,65 +69,139 @@ const computerPlay = () =>{
     return choice[Math.floor(Math.random() *Math.floor(len))];
 }
 
-function playRound(){
-    
-    let playerSelection = prompt("Rock, Paper, or Scissors? Choose one.");
-    
-    
-    while(playerSelection.toLowerCase() != "rock" && playerSelection.toLowerCase() != "paper" && playerSelection.toLowerCase() != "scissors"){
-        playerSelection = prompt("Rock, Paper, or Scissors? Choose one.");
-
+const checkRound = () =>{
+    if(roundCount == rounds){
+        gameOver();
+    } else{
+        return;
     }
-
-    let computerSelection = computerPlay();
-    let lowerS = playerSelection.toLowerCase();
-    
-    if( lowerS === "rock" && computerSelection === "scissors"){
-        win(playerSelection,computerSelection);
-        
-    }
-    else if(lowerS === "paper" && computerSelection === "rock"){
-        win(playerSelection,computerSelection);
-    }
-    else if(lowerS === "scissors" && computerSelection === "paper"){
-        win(playerSelection,computerSelection);
-    }
-    else if( lowerS === "scissors" && computerSelection === "rock"){
-        lose(playerSelection,computerSelection);
-    }
-    else if(lowerS === "rock" && computerSelection === "paper"){
-        lose(playerSelection,computerSelection);
-    }
-    else if(lowerS === "paper" && computerSelection === "scissors"){
-        lose(playerSelection,computerSelection);
-    }
-    else if( lowerS === "rock" && computerSelection === "rock"){
-        tie(playerSelection,computerSelection);
-    }
-    else if(lowerS === "paper" && computerSelection === "paper"){
-        tie(playerSelection,computerSelection);
-    }
-    else if(lowerS === "scissors" && computerSelection === "scissors"){
-        tie(playerSelection,computerSelection);
-    }
-
-
 }
 
+const clearAll = () =>{
+    let allDivs = document.querySelectorAll('div');
+    allDivs.forEach((div)=>{
+        div.classList.add("invisible");
+    });
+}
+
+submit.addEventListener('click', () => {
+    rounds = document.getElementById('input').value;
+    if(isNaN(Number(rounds))){
+        alert("Please enter numbers only");
+    }else{
+        rounds = Number(rounds);
+        formDiv.classList.add("invisible");
+        container.classList.remove('invisible');
+    }
+});
+
+
+
+
+exit.addEventListener('click', ()=>{
+    clearAll();    
+});
+
+reset.addEventListener('click', () =>{
+    clearAll();
+    formDiv.classList.remove('invisible');
+    gameText.classList.remove('invisible');
+    roundCount = 0;
+    playerScore = 0;
+    compScore = 0;
+    gameText.innerHTML = "";
+});
+
+rock.addEventListener('click', () =>{
+    let comp = computerPlay();
+    playerChoice = rock.innerHTML;
+    gameText.innerHTML = game(playerChoice, comp);
+    gameText.innerHTML += "<br /> <br />";
+    gameText.innerHTML += `Player Score: ${playerScore}  Computer Score: ${compScore}`;
+    roundCount++;
+    
+    checkRound();
+     
+});
+
+paper.addEventListener('click', () =>{
+    let comp = computerPlay();
+    playerChoice = paper.innerHTML;
+    gameText.innerHTML = game(playerChoice, comp);
+    gameText.innerHTML += "<br /> <br />";
+    gameText.innerHTML += `Player Score: ${playerScore}  Computer Score: ${compScore}`;
+    roundCount++;    
+    checkRound();    
+});
+
+scissors.addEventListener('click', () =>{
+    let comp = computerPlay();
+    playerChoice = scissors.innerHTML;
+    gameText.innerHTML = game(playerChoice, comp);
+    gameText.innerHTML += "<br /> <br />";
+    gameText.innerHTML += `Player Score: ${playerScore}  Computer Score: ${compScore}`;
+    roundCount++;    
+    checkRound();    
+});
+
+const game = (pChoice, cChoice) =>{
+    let lowerS = pChoice.toLowerCase();
+    let computerSelection = cChoice;
+
+    if( lowerS === "rock" && computerSelection === "scissors"){
+       return win(pChoice,computerSelection);  
+    }
+    else if(lowerS === "paper" && computerSelection === "rock"){
+        return win(pChoice,computerSelection);
+    }
+    else if(lowerS === "scissors" && computerSelection === "paper"){
+        return win(pChoice,computerSelection);
+    }
+    else if( lowerS === "scissors" && computerSelection === "rock"){
+        return lose(pChoice,computerSelection);
+    }
+    else if(lowerS === "rock" && computerSelection === "paper"){
+        return lose(pChoice,computerSelection);
+    }
+    else if(lowerS === "paper" && computerSelection === "scissors"){
+        return lose(pChoice,computerSelection);
+    }
+    else if( lowerS === "rock" && computerSelection === "rock"){
+        return tie(pChoice,computerSelection);
+    }
+    else if(lowerS === "paper" && computerSelection === "paper"){
+        return tie(pChoice,computerSelection);
+    }
+    else if(lowerS === "scissors" && computerSelection === "scissors"){
+        return tie(pChoice,computerSelection);
+    }
+}
 
 const win = (playerSelection, computerSelection) =>{
     playerScore++;
-    console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+    return `You Win! ${playerSelection} beats ${computerSelection}`;
+    
 }
 
 const lose = (playerSelection, computerSelection) =>{
     compScore++;
-    console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+    return `You Lose! ${computerSelection} beats ${playerSelection}`;
+    
 }
 
 const tie = (playerSelection, computerSelection) =>{
-    console.log(`It's a Tie!  You picked: ${playerSelection} and they picked: ${computerSelection}`);
+    return `It's a Tie!  You picked: ${playerSelection} and they picked: ${computerSelection}`;
+    
 }
 
+const gameOver = () => {
+    if(playerScore > compScore){
+        gameText.innerHTML += "<br /> <br /> Game Over. You Won! Do you want to play again?";
+    }else if(playerScore < compScore){
+        gameText.innerHTML += "<br /> <br />Game Over. You Lost. Do you want to play again?";
+    }else{
+        gameText.innerHTML += "<br /> <br />Game Over. It's a Tie! Do you want to play again?";
+    }
+    end.classList.remove("invisible");   
+}
 
-game();*/

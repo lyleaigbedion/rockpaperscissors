@@ -45,3 +45,35 @@ button:focus {
     width: 487px;
     z-index: 0;
 }
+.invisible {
+    display: none;
+    visibility: hidden;
+}
+
+#input{
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    margin-top: 0px;
+    padding: 0;
+    color: rgba(0,0,0,.87);
+    word-wrap: break-word;
+    outline: none;
+    
+    
+    margin-top: -37px;
+    font: 16px arial,sans-serif;
+    line-height: normal;
+    line-height: 34px;
+    height: 34px !important;
+    background: #fff;
+    
+    border-radius: 8px;
+    border: 1px solid #dfe1e5;
+    box-shadow: none;
+   
+    z-index: 3;
+    height: 44px;
+    margin: 0 auto;
+    padding-left: 5px;
+}
