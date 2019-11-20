@@ -71,6 +71,9 @@ const computerPlay = () =>{
 
 const checkRound = () =>{
     if(roundCount == rounds){
+        rock.classList.add("invisible");
+        paper.classList.add("invisible");
+        scissors.classList.add("invisible");
         gameOver();
     } else{
         return;
@@ -106,6 +109,9 @@ reset.addEventListener('click', () =>{
     clearAll();
     formDiv.classList.remove('invisible');
     gameText.classList.remove('invisible');
+    rock.classList.remove("invisible");
+    paper.classList.remove("invisible");
+    scissors.classList.remove("invisible");
     roundCount = 0;
     playerScore = 0;
     compScore = 0;
